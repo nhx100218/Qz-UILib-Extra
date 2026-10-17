@@ -85,6 +85,11 @@ public final class BqImeBridge {
         if (text == null || text.isEmpty()) {
             return;
         }
+        // 只桥接 BQ 自身按键处理会丢弃的字符（中文等非白名单字符）。
+        // 白名单内的 ASCII 已由 onKeyTyped 写入，若这里再写一次会变成双份（"a"→"aa"）。
+        if (!qzuilib$needsBridge(text)) {
+            return;
+        }
         PanelTextField<?> field = focused.get();
         if (field == null || !field.isFocused()) {
             return;
@@ -94,5 +99,15 @@ public final class BqImeBridge {
             return;
         }
         field.writeText(text);
+    }
+
+    /** 文本中是否含有原版字符白名单之外的字符（即 BQ 的 onKeyTyped 不会写入的字符）。 */
+    private static boolean qzuilib$needsBridge(String text) {
+        for (int i = 0; i < text.length(); i++) {
+            if (!net.minecraft.util.ChatAllowedCharacters.isAllowedCharacter(text.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

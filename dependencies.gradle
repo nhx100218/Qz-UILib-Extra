@@ -12,4 +12,5 @@ dependencies {
     compileOnly files('libs/chromatictooltipscompat-1.0.38-GTNH.jar')
     compileOnly files('libs/qz_uilib-4.11.1.jar')
     compileOnly files('libs/lwjgl3ify-3.0.35.jar')
+    compileOnly files('libs/bogosorter-1.3.54-GTNH.jar')
 }

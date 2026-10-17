@@ -65,6 +65,9 @@ public class LateMixins implements ILateMixinLoader {
             if (has.test("TConstruct")) {
                 mixins.add("tconstruct.MixinSmelteryGui");
             }
+            if (has.test("bogosorter")) {
+                mixins.add("bogo.MixinBogoHotbarSwap");
+            }
         }
         return mixins;
     }

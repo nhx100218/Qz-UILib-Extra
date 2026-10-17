@@ -36,6 +36,12 @@ public class MixinNeiTooltipComponentCompat {
         if (!TooltipConfig.enabled || lineHandler == null) {
             return;
         }
+        // 仅对「工作台 / 工作方块」的配方预览处理器（RecipeTooltipLineHandler）做居中偏移。
+        // 合成链（RecipeChainTooltipLineHandler）、物品组（AcceptsFollowingTooltipLineHandler）等
+        // 内容本身按左侧对齐，若一并偏移会整体右移错位——这些交回默认左对齐绘制。
+        if (!(lineHandler instanceof codechicken.nei.recipe.RecipeTooltipLineHandler)) {
+            return;
+        }
         java.awt.Dimension size = lineHandler.getSize();
         int w = size == null ? 0 : size.width;
         int tooltipW = -1;

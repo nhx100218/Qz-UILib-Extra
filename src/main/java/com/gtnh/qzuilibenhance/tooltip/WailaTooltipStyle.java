@@ -8,6 +8,12 @@ package com.gtnh.qzuilibenhance.tooltip;
  */
 public final class WailaTooltipStyle {
 
+    /**
+     * Waila 外边框固定为不透明深灰。RC2 起 Waila 传入的 {@code bgcolor} 在运行期变成白色
+     * （配置读取/默认值变动），若沿用会变白；这里直接固定为原本的深灰，保证观感稳定。
+     */
+    private static final int WAILA_BORDER = 0xFF303030;
+
     private WailaTooltipStyle() {}
 
     public static boolean draw(int x, int y, int width, int height, int border, int gradTop,
@@ -15,11 +21,10 @@ public final class WailaTooltipStyle {
         if (!TooltipConfig.enabled || !TooltipConfig.waila || width <= 0 || height <= 0) {
             return false;
         }
-        // 颜色沿用 Waila 传入值；启动时 StartupConfigFixer 已把背景改成黑色、外边框改成深灰。
         TooltipRoundedRect.draw(x, y, x + width, y + height, TooltipConfig.wailaCornerRadius,
                 Math.max(0.5F, TooltipConfig.wailaBorderWidth),
                 gradTop, gradTop, gradBottom, gradBottom,
-                border, border, border, border, 300.0);
+                WAILA_BORDER, WAILA_BORDER, WAILA_BORDER, WAILA_BORDER, 300.0);
         return true;
     }
 }
